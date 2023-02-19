@@ -1,0 +1,7 @@
+
+SELECT 
+  INPUT_DATA,
+  SUBSTR(INPUT_DATA,1,10) as function_signature_substring,
+  origin_function_signature
+FROM ethereum.core.fact_transactions
+	WHERE tx_hash = '0x29381510131c8b46c2150c6d859b3771705aa3606d9e9255749f6c11069ac795' AND block_timestamp::DATE = '2022-10-31'
