@@ -45,3 +45,19 @@ FROM ethereum.core.fact_decoded_event_logs
   	WHERE block_timestamp::date = '2022-08-15'
 	AND tx_hash = '0xa66b38d1779078a7c7de220b5035552637dca22f247fd9b74ac63a4fd0a261b0'
 	AND event_index = '57'
+
+
+
+
+--TRACE TABLE
+  SELECT 
+  date_trunc('hour', block_timestamp) AS hourly,
+  sum(eth_value) as total_fees_eth_collected
+FROM ethereum.core.fact_traces
+  WHERE block_timestamp::DATE = '2022-12-02'
+  -- AND tx_hash = '0x9793dd49b9f58810c8ced6222678a483a2276550ffb109365cb3c5c0f7c5b864'
+  AND eth_value > 8
+  AND identifier != 'CALL_ORIGIN'
+  AND to_address = '0x8755773dc777b9f9b2e2c86402a03f099f823691'
+  GROUP BY hourly
+LIMIT 10
